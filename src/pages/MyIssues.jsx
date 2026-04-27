@@ -7,6 +7,7 @@ import Card from '../components/common/Card';
 import apiService from '../services/api';
 import { ISSUE_STATUS } from '../utils/constants';
 import toast from 'react-hot-toast';
+import { ClipboardList, Clock3, RefreshCw, Sparkles, TrendingUp } from 'lucide-react';
 
 /**
  * My Issues page - shows user's reported issues
@@ -68,82 +69,88 @@ const MyIssues = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-            My Reported Issues
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400">
-            Track the status of issues you've reported
-          </p>
+    <div className="min-h-screen py-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200">
+              <ClipboardList className="h-4 w-4 text-civic-300" />
+              My reported issues
+            </div>
+            <h1 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              Track every report you’ve made.
+            </h1>
+            <p className="mt-3 max-w-2xl text-slate-300">
+              Review progress, compare status changes, and jump back into the issues that need attention.
+            </p>
+          </div>
+
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => navigate('/report')}
+            icon={<Sparkles className="h-4 w-4" />}
+          >
+            Report New Issue
+          </Button>
         </div>
 
-        {/* Statistics Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4 mb-8">
           <Card padding="md" className="text-center">
-            <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-1">
-              {stats.total}
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-500/10 text-primary-300">
+              <TrendingUp className="h-5 w-5" />
             </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Total Issues</div>
+            <div className="mt-3 text-3xl font-bold text-white">{stats.total}</div>
+            <div className="text-sm text-slate-400">Total issues</div>
           </Card>
-          
+
           <Card padding="md" className="text-center">
-            <div className="text-3xl font-bold text-red-600 dark:text-red-400 mb-1">
-              {stats.open}
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-500/10 text-rose-300">
+              <Clock3 className="h-5 w-5" />
             </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Open</div>
+            <div className="mt-3 text-3xl font-bold text-white">{stats.open}</div>
+            <div className="text-sm text-slate-400">Open</div>
           </Card>
-          
+
           <Card padding="md" className="text-center">
-            <div className="text-3xl font-bold text-yellow-600 dark:text-yellow-400 mb-1">
-              {stats.inProgress}
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-300">
+              <RefreshCw className="h-5 w-5" />
             </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">In Progress</div>
+            <div className="mt-3 text-3xl font-bold text-white">{stats.inProgress}</div>
+            <div className="text-sm text-slate-400">In progress</div>
           </Card>
-          
+
           <Card padding="md" className="text-center">
-            <div className="text-3xl font-bold text-green-600 dark:text-green-400 mb-1">
-              {stats.resolved}
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-300">
+              <ClipboardList className="h-5 w-5" />
             </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Resolved</div>
+            <div className="mt-3 text-3xl font-bold text-white">{stats.resolved}</div>
+            <div className="text-sm text-slate-400">Resolved</div>
           </Card>
         </div>
 
-        {/* Filters and Actions */}
         <Card padding="md" className="mb-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex gap-2">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-800 dark:text-gray-100"
+                className="bg-transparent text-sm text-slate-100 outline-none"
               >
-                <option value="all">All Status</option>
-                <option value={ISSUE_STATUS.OPEN}>Open</option>
-                <option value={ISSUE_STATUS.ASSIGNED}>Assigned</option>
-                <option value={ISSUE_STATUS.IN_PROGRESS}>In Progress</option>
-                <option value={ISSUE_STATUS.RESOLVED}>Resolved</option>
+                <option value="all" className="bg-slate-900">All Status</option>
+                <option value={ISSUE_STATUS.OPEN} className="bg-slate-900">Open</option>
+                <option value={ISSUE_STATUS.ASSIGNED} className="bg-slate-900">Assigned</option>
+                <option value={ISSUE_STATUS.IN_PROGRESS} className="bg-slate-900">In Progress</option>
+                <option value={ISSUE_STATUS.RESOLVED} className="bg-slate-900">Resolved</option>
               </select>
             </div>
 
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => navigate('/report')}
-              icon={<span>📝</span>}
-            >
-              Report New Issue
-            </Button>
-          </div>
-
-          <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
-            Showing <strong>{filteredIssues.length}</strong> of <strong>{issues.length}</strong> issues
+            <div className="text-sm text-slate-400">
+              Showing <strong className="text-white">{filteredIssues.length}</strong> of <strong className="text-white">{issues.length}</strong> issues
+            </div>
           </div>
         </Card>
 
-        {/* Issues List */}
         <IssueList
           issues={filteredIssues}
           loading={loading}

@@ -5,6 +5,7 @@ import Button from '../components/common/Button';
 import MapView from '../components/map/MapView';
 import apiService from '../services/api';
 import toast from 'react-hot-toast';
+import { ArrowLeft, MapPinned, Share2 } from 'lucide-react';
 
 /**
  * Issue Details page - shows full details of a single issue
@@ -65,10 +66,10 @@ const IssueDetailsPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-400">Loading issue details...</p>
+          <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-primary-400"></div>
+          <p className="text-slate-300">Loading issue details...</p>
         </div>
       </div>
     );
@@ -76,13 +77,13 @@ const IssueDetailsPage = () => {
 
   if (error || !issue) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="text-6xl mb-4">⚠️</div>
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+          <h2 className="mb-2 text-2xl font-semibold text-white">
             Issue Not Found
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
+          <p className="mb-6 text-slate-300">
             {error || 'The issue you\'re looking for doesn\'t exist'}
           </p>
           <Button onClick={() => navigate('/')}>
@@ -94,19 +95,14 @@ const IssueDetailsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Back button */}
+    <div className="min-h-screen py-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Button
           variant="ghost"
           size="sm"
           onClick={() => navigate(-1)}
           className="mb-6"
-          icon={
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          }
+          icon={<ArrowLeft className="h-4 w-4" />}
         >
           Back
         </Button>
@@ -123,11 +119,11 @@ const IssueDetailsPage = () => {
 
           {/* Sidebar */}
           <div className="space-y-6">
-            {/* Mini map */}
             <div className="sticky top-20">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
+              <div className="mb-3 flex items-center gap-2 text-lg font-semibold text-white">
+                <MapPinned className="h-5 w-5 text-primary-300" />
                 Location
-              </h3>
+              </div>
               <MapView
                 issues={[issue]}
                 center={[issue.location.lat, issue.location.lng]}
@@ -135,12 +131,11 @@ const IssueDetailsPage = () => {
                 height="300px"
               />
 
-              {/* Actions */}
               <div className="mt-6 space-y-3">
                 <Button
                   variant="outline"
                   fullWidth
-                  icon={<span>🔗</span>}
+                  icon={<Share2 className="h-4 w-4" />}
                   onClick={() => {
                     navigator.clipboard.writeText(window.location.href);
                     toast.success('Link copied to clipboard');
@@ -152,7 +147,7 @@ const IssueDetailsPage = () => {
                 <Button
                   variant="outline"
                   fullWidth
-                  icon={<span>🗺️</span>}
+                  icon={<MapPinned className="h-4 w-4" />}
                   onClick={() => {
                     window.open(
                       `https://www.google.com/maps?q=${issue.location.lat},${issue.location.lng}`,

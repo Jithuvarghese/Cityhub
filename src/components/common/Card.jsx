@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { cn } from '../../utils/cn';
 
 /**
  * Reusable Card component
@@ -24,7 +25,7 @@ const Card = ({
   
   return (
     <div 
-      className={`bg-white rounded-lg shadow-md dark:bg-gray-800 ${paddingClasses[padding]} ${hoverClass} ${clickableClass} ${className}`}
+      className={cn('card', paddingClasses[padding], hoverClass, clickableClass, className)}
       onClick={onClick}
       role={onClick ? 'button' : undefined}
       tabIndex={onClick ? 0 : undefined}

@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
+import { cn } from '../../utils/cn';
 
 /**
  * Reusable Input component with label and error handling
@@ -43,17 +44,11 @@ const Input = forwardRef(({
           type={type}
           placeholder={placeholder}
           disabled={disabled}
-          className={`
-            w-full px-4 py-2 border rounded-lg transition-colors duration-200
-            focus:ring-2 focus:ring-primary-500 focus:border-transparent
-            disabled:bg-gray-100 disabled:cursor-not-allowed
-            dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100
-            ${icon ? 'pl-10' : ''}
-            ${error 
-              ? 'border-red-500 focus:ring-red-500' 
-              : 'border-gray-300 dark:border-gray-600'
-            }
-          `}
+          className={cn(
+            'input transition-all duration-200 placeholder:text-slate-400/80 disabled:cursor-not-allowed disabled:opacity-60',
+            icon && 'pl-10',
+            error ? 'border-red-500 focus:ring-red-500' : 'border-white/10 dark:border-white/10'
+          )}
           aria-invalid={error ? 'true' : 'false'}
           aria-describedby={error ? `${name}-error` : helperText ? `${name}-helper` : undefined}
           {...props}

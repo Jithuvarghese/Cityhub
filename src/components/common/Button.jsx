@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { cn } from '../../utils/cn';
 
 /**
  * Reusable Button component with multiple variants
@@ -40,7 +41,7 @@ const Button = ({
       type={type}
       disabled={disabled || loading}
       onClick={onClick}
-      className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${widthClass} ${className}`}
+      className={cn(baseClasses, variantClasses[variant], sizeClasses[size], widthClass, className)}
       {...props}
     >
       {loading ? (
